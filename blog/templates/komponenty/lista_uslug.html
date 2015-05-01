@@ -2,8 +2,8 @@
 	{% for x in lista_uslug %}
 	<li class="list-group-item">
 		<div class="row">
-			<div class="col-sm-8">
-				<a href="{{ x.adres }}">{{ x.nazwa }}</a>
+			<div class="col-sm-8" id="vertical-center" >
+				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  <a href="{{ x.adres }}">{{ x.nazwa }}</a>
 			</div>
 			<div class="col-sm-4 text-right">
 				<div class="btn-group kontrolki-listy">
@@ -20,7 +20,7 @@
 				</div>
 				{% elif x.activeState == "failed" %}
 				<button type="button" class="btn dropdown-toggle btn-danger" data-toggle="dropdown" aria-expanded="false">
-						Started <span class="caret"></span>
+						Failed <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#">Restart</a></li>
@@ -31,7 +31,7 @@
 				</div>
 				{% elif x.activeState == "reloading" or x.activeState == "activating" or x.activeState == "deactivating" %}
 				<button type="button" class="btn dropdown-toggle btn-warning" data-toggle="dropdown" aria-expanded="false">
-						Started <span class="caret"></span>
+						Reloading <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#">Restart</a></li>

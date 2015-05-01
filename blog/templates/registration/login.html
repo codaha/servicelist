@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block zawartosc %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<div class="container" >
+
+	<form class="form-signin" method="post" action="{% url 'blog.views.logowanie' %}">
+	{% csrf_token %}
+		<h2 class="form-signin-heading">Service list login</h2>
+		<label for="inputEmail" class="sr-only">Your login</label>
+		<input type="login" name="id_username" class="form-control" placeholder="Your login" required autofocus>
+		<label for="inputPassword" class="sr-only">Password</label>
+		<input type="password" name="id_password" class="form-control" placeholder="Password" required>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" value="remember-me"> Remember me
+			</label>
+		</div>
+
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+				
+		{{ ukryty }}
+		
+
+
+
+	</form>
+
+</div> <!-- /container -->
+
+
+{% endblock %}
