@@ -2,6 +2,28 @@ body {
 	padding-top: 50px; /* zeby zawartosc nie chowala sie pod paskiem */
 }
 
-#glowny-kontener {
+.margines_1em {
 	margin-top: 1em;
 }
+
+.form-signin {
+	max-width: 330px;
+
+	margin-left: auto; /* wycentrowanie bloku */
+	margin-right: auto;
+}
+.dodaj{
+max-width: 630px;
+
+	margin-left: auto; /* wycentrowanie bloku */
+	margin-right: auto;
+
+}
+/*do listy uslug*/
+.waski{
+max-width: 430px;
+
+}
+
+.ukryty 
+    { display: none; }

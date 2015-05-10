@@ -23,9 +23,9 @@
 
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-				
-		{{ ukryty }}
-		
+		{% if ukryty %}
+		<div class="alert alert-danger margines_1em" role="alert">{{ ukryty }}</div>	
+		{% endif %}
 
 
 

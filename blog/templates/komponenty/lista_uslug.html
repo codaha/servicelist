@@ -1,9 +1,21 @@
-<ul class="list-group">
+{% load staticfiles%}
+
+
+	<script type="text/javascript" src="{% static "js/lista.js" %}" ></script>
+
+<ul class="list-group" id="sortable">
+
 	{% for x in lista_uslug %}
-	<li class="list-group-item">
+
+	<li class="list-group-item" id="pozycja_{{ x.id}}">
 		<div class="row">
 			<div class="col-sm-8" id="vertical-center" >
-				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  <a href="{{ x.adres }}">{{ x.nazwa }}</a>
+				
+				{%if x.opis%}
+				<span id="ikona_{{ x.id }}" class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>  
+				{%endif%}
+				<a href="{{ x.adres }}">{{ x.nazwa }}</a>
+
 			</div>
 			<div class="col-sm-4 text-right">
 				<div class="btn-group kontrolki-listy">
@@ -44,5 +56,24 @@
 			</div>
 		</div>
 	</li>
+
+
+{%if x.opis%}
+	<li class="list-group-item ukryty" id="opis_{{ x.id }}">
+	<div class="row">
+{{ x.opis}}
+</div>
+	</li>
+
+	<script>
+ $( "#ikona_{{ x.id }}" ).click(function() {
+
+    $( "#opis_{{ x.id }}" ).toggle( "slide" );
+    
+  });
+</script>
+{%endif%}
 	{% endfor %}
+
+	<button id="zmien" class="btn btn-lg btn-primary btn-block">zmien</button>
 </ul>

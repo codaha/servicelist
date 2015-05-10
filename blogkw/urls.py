@@ -12,4 +12,10 @@ urlpatterns = patterns('',
     url(r'^$', include('blog.urls')),
 
     url(r'^login/$', 'blog.views.logowanie'),
+
+    url(r'^logout/$', 'blog.views.wyloguj'),
+
+	url(r'^dodaj/$', 'blog.views.dodajnowy'),
+
+	url(r'^kolejnosc/$', 'blog.views.kolejnosc'),
 )
