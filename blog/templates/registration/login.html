@@ -6,15 +6,26 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+{% if failure_limit %}
+<script>
+$( document ).ready(function() {
+$("#formlog :input").prop("disabled", true);
+$("#formlog:submit").attr("disabled", true);
+});
+</script>
+{% endif %}
+
+
 <div class="container" >
 
-	<form class="form-signin" method="post" action="{% url 'blog.views.logowanie' %}">
+	<form id="formlog" class="form-signin" method="post" action="{% url 'blog.views.logowanie' %}">
 	{% csrf_token %}
 		<h2 class="form-signin-heading">Service list login</h2>
 		<label for="inputEmail" class="sr-only">Your login</label>
 		<input type="login" name="id_username" class="form-control" placeholder="Your login" required autofocus>
 		<label for="inputPassword" class="sr-only">Password</label>
 		<input type="password" name="id_password" class="form-control" placeholder="Password" required>
+		<input type="hidden" name="next" placeholder="{{ request.GET.next }}">
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" value="remember-me"> Remember me
@@ -23,8 +34,20 @@
 
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-		{% if ukryty %}
-		<div class="alert alert-danger margines_1em" role="alert">{{ ukryty }}</div>	
+
+
+		{% if ukryty or failure_limit %}
+		<div class="alert alert-danger margines_1em" role="alert">
+	
+			{% if ukryty %}
+				{{ ukryty }}
+			{% endif %}
+
+{% if failure_limit %}
+	Przekroczyłeś liczbę {{ failure_limit }} prób logowania. Spróbuj ponownie w ciągu {{cooloff_time}} godzin.
+{% endif %}
+
+        </div>	
 		{% endif %}
 
 

@@ -15,7 +15,21 @@ from systemd.manager import Manager
 from .forms import *
 from blog.models import *
 
-@login_required
+
+
+
+from django.conf import settings
+if(settings.ALLOW_ANONYMOUS):
+	def nic(funct):
+		return funct
+		
+	corobic = nic
+
+else:
+	corobic = login_required
+
+
+@corobic
 def stronaglowna(request):
 
 	#if not request.user.is_authenticated():
@@ -43,7 +57,8 @@ def stronaglowna(request):
 	systemd_manager.unsubscribe()
 	return render(request, 'main.html', kontekst)
 
-@login_required
+
+@corobic
 def dodajnowy(request):
 	if request.method == 'POST':
 	# create a form instance and populate it with data from the request:
@@ -58,9 +73,12 @@ def dodajnowy(request):
 	else:
 		form = Nowy()
 
+
 	return render(request, 'dodaj.html', {'form': form})
 	#return HttpResponse("empty")
 from axes.decorators import watch_login
+
+#potrzebne poniewaz nie uzywam standardowego view django login
 @watch_login
 def logowanie(request):
 	#jeśli strona jest przeładowywana w celu logowania
@@ -83,8 +101,8 @@ def logowanie(request):
 			if user.is_active:
 				login(request, user)
 				#jeśli jest info gdzie przekirować z strony logowania
-				if next in request.GET:
-					return redirect(request.GET['next'])#TODO
+				if next in request.POST:
+					return redirect(blog.views.request.POST['next'])#TODO
 				#jeśli user wszedl bezposrednio na stronę logowania
 				else:
 					return redirect('blog.views.stronaglowna')
@@ -110,7 +128,7 @@ def kolejnosc(request):
 		#usuwamy "pozycja" i dzielimy string na liste
 		lista= request.POST.get('lista', '').replace("pozycja[]=", "").split('&')
 
-		lista_baza = Usluga.objects.all()
+		#lista_baza = Usluga.objects.all()
 
 		#import pdb; pdb.set_trace()
 

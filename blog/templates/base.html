@@ -62,6 +62,18 @@
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js" ></script>
 
+<script>
+$(document).ready(function() {
+
+    $("#sortable").sortable();
+
+    $( "#zmien" ).click(function() {
+        $.post("{% url 'blog.views.kolejnosc' %}", { lista: $('#sortable').sortable('serialize'),'csrfmiddlewaretoken': '{{ csrf_token }}' } );
+    });
+
+});
+
+</script>
         {% block zawartosc %}
         {% endblock %}
 

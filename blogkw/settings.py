@@ -88,3 +88,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = 'blog.views.logowanie'
+
+
+#axes:
+AXES_LOCKOUT_TEMPLATE = 'registration/login.html'
+AXES_COOLOFF_TIME = 1
+
+#project settings
+ALLOW_ANONYMOUS = 1 

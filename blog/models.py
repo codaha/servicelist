@@ -12,8 +12,8 @@ class Usluga(models.Model):
 	plik_service = models.CharField('nazwa pliku service', max_length=100, blank=True)
 	opis = models.CharField('opisik', max_length=1000, default="")
 
-	#kolejnosc = models.IntegerField(default=lambda: Usluga.get_next_number())
-	kolejnosc = models.IntegerField(default=0)
+	kolejnosc = models.IntegerField(default=lambda: Usluga.get_next_number())
+	#kolejnosc = models.IntegerField(default=0) #ustaw przy migracji
 	@classmethod
 	def get_next_number(cls):
 		return cls.objects.count() + 1
