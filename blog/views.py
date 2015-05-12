@@ -29,9 +29,11 @@ else:
 	corobic = login_required
 
 
-#funkcja używna przez liste uslug  podstrone edycji
-def lista(request):
 
+
+@corobic
+def uslugi(request):
+	
 	systemd_manager = Manager()
 
 
@@ -51,15 +53,8 @@ def lista(request):
 		'lista_uslug': lista_baza
 	}
 	systemd_manager.unsubscribe()
-	return kontekst
-
-@corobic
-def uslugi(request):
 	
-	k=lista(request)
-	k.update({'coto': 'lista'})
-	
-	return render(request, 'main.html', k)
+	return render(request, 'main.html', kontekst)
 
 
 
