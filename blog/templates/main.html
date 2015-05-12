@@ -12,8 +12,13 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">Panel title</h3>
 		</div>
+
 		<div class="panel-body">
-		{% include "komponenty/lista_uslug.html" %}
+		{% if coto == 'lista' %}
+		{% include "komponenty/lista_uslug.html" with coto2='lista2' %}
+		{% elif coto == 'edycja' %}
+		{% include "komponenty/lista_uslug.html" with coto2='edycja2' %}
+		{% endif %}
 		</div>
 	</div>
 

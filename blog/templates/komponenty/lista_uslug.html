@@ -1,8 +1,8 @@
 
 
-<ul class="list-group" id="sortable">
+<ul class="list-group" {%if coto2 == 'edycja2'%}id="sortable"{%endif%}>
 
-	{% for x in lista_uslug %}
+{% for x in lista_uslug %}
 
 	<li class="list-group-item" id="pozycja_{{ x.id}}">
 		<div class="row">
@@ -15,62 +15,54 @@
 
 			</div>
 			<div class="col-sm-4 text-right">
-				<div class="btn-group kontrolki-listy">
-				{% if x.activeState == "active" %}
-					<button type="button" class="btn dropdown-toggle btn-success" data-toggle="dropdown" aria-expanded="false">
-						Started <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Restart</a></li>
-						<li><a href="#">Show log</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Info</a></li>
-					</ul>
-				</div>
-				{% elif x.activeState == "failed" %}
-				<button type="button" class="btn dropdown-toggle btn-danger" data-toggle="dropdown" aria-expanded="false">
-						Failed <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Restart</a></li>
-						<li><a href="#">Show log</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Info</a></li>
-					</ul>
-				</div>
-				{% elif x.activeState == "reloading" or x.activeState == "activating" or x.activeState == "deactivating" %}
-				<button type="button" class="btn dropdown-toggle btn-warning" data-toggle="dropdown" aria-expanded="false">
-						Reloading <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Restart</a></li>
-						<li><a href="#">Show log</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Info</a></li>
-					</ul>
-				</div>
-				{% endif %}
+				{%if coto2 == 'lista2'%}
+
+
+					{% if x.activeState == "active" %}
+						
+						{% include 'komponenty/kontrolka.html' with kolor='btn-success' napis='Started'%}
+							
+
+
+					{% elif x.activeState == "failed" %}
+					
+						{% include 'komponenty/kontrolka.html' with kolor='btn-danger' napis='Failed'%}
+							
+
+					{% elif x.activeState == "reloading" or x.activeState == "activating" or x.activeState == "deactivating" %}
+			
+						{% include 'komponenty/kontrolka.html' with kolor='btn-warning' napis='Reloading'%}
+					
+					{% endif %}
+
+				{%endif%}
 			</div>
-		</div>
-	</li>
+</div>
+</li>
 
 
 {%if x.opis%}
-	<li class="list-group-item ukryty" id="opis_{{ x.id }}">
+<li class="list-group-item ukryty" id="opis_{{ x.id }}">
 	<div class="row">
-{{ x.opis}}
-</div>
-	</li>
+		{{ x.opis}}
+	</div>
+</li>
 
-	<script>
- $( "#ikona_{{ x.id }}" ).click(function() {
+<script>
+	$( "#ikona_{{ x.id }}" ).click(function() {
 
-    $( "#opis_{{ x.id }}" ).toggle( "slide" );
-    
-  });
+		$( "#opis_{{ x.id }}" ).toggle( "slide" );
+
+	});
 </script>
 {%endif%}
-	{% endfor %}
 
-	<button id="zmien" class="btn btn-lg btn-primary btn-block">zmien</button>
+
+
+
+{% endfor %}
 </ul>
+{%if coto2 == 'edycja2'%}
+<button id="zmien" class="btn btn-lg btn-primary btn-block">zmien</button>
+{%endif%}
+

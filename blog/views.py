@@ -29,15 +29,11 @@ else:
 	corobic = login_required
 
 
-@corobic
-def stronaglowna(request):
-
-	#if not request.user.is_authenticated():
-
-		#return redirect('blog.views.logowanie')
+#funkcja używna przez liste uslug  podstrone edycji
+def lista(request):
 
 	systemd_manager = Manager()
-	#lista_system = systemd_manager.list_units() #blokuje przy ponownym odswierzeniu
+
 
 	lista_baza = Usluga.objects.all()
 
@@ -55,7 +51,25 @@ def stronaglowna(request):
 		'lista_uslug': lista_baza
 	}
 	systemd_manager.unsubscribe()
-	return render(request, 'main.html', kontekst)
+	return kontekst
+
+#podstrona edycji
+@corobic
+def uslugi(request):
+	
+	k=lista(request)
+	k.update({'coto': 'lista'})
+	
+	return render(request, 'main.html', k)
+
+
+#lista zwyklych uslug
+@corobic
+def edycja(request):
+	
+	k=lista(request)
+	k['coto'] = 'edycja'
+	return render(request, 'main.html', k)
 
 
 @corobic
@@ -105,10 +119,10 @@ def logowanie(request):
 					return redirect(blog.views.request.POST['next'])#TODO
 				#jeśli user wszedl bezposrednio na stronę logowania
 				else:
-					return redirect('blog.views.stronaglowna')
+					return redirect('blog.views.uslugi')
 	#jeśli user jest już zalogowany
 	if request.user.is_authenticated():
-		return redirect('blog.views.stronaglowna')
+		return redirect('blog.views.uslugi')
 	#jeśli strona loginu jest otwierana w celu wpisania danych dopiero
 	else:
 		return render(request, 'registration/login.html')
@@ -137,4 +151,4 @@ def kolejnosc(request):
 			pozycja.kolejnosc=nr
 			pozycja.save()
 			
-		print(lista)
+		#print(lista)
