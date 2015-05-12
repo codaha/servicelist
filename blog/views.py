@@ -53,7 +53,6 @@ def lista(request):
 	systemd_manager.unsubscribe()
 	return kontekst
 
-#podstrona edycji
 @corobic
 def uslugi(request):
 	
@@ -62,14 +61,6 @@ def uslugi(request):
 	
 	return render(request, 'main.html', k)
 
-
-#lista zwyklych uslug
-@corobic
-def edycja(request):
-	
-	k=lista(request)
-	k['coto'] = 'edycja'
-	return render(request, 'main.html', k)
 
 
 @corobic

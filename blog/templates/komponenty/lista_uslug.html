@@ -1,6 +1,6 @@
 
 
-<ul class="list-group" {%if coto2 == 'edycja2'%}id="sortable"{%endif%}>
+<ul class="list-group" id="sortable">
 
 {% for x in lista_uslug %}
 
@@ -15,7 +15,7 @@
 
 			</div>
 			<div class="col-sm-4 text-right">
-				{%if coto2 == 'lista2'%}
+			
 
 
 					{% if x.activeState == "active" %}
@@ -35,7 +35,7 @@
 					
 					{% endif %}
 
-				{%endif%}
+				
 			</div>
 </div>
 </li>
@@ -62,7 +62,7 @@
 
 {% endfor %}
 </ul>
-{%if coto2 == 'edycja2'%}
+
 <button id="zmien" class="btn btn-lg btn-primary btn-block">zmien</button>
-{%endif%}
+
 
