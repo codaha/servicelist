@@ -45,3 +45,4 @@ class Pozwolenie(models.Model):
 	Uprawnienia = models.CharField(max_length=2, choices=typy,
 		default=UZYTKOWNIK)
 
+#
