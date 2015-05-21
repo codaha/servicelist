@@ -12,8 +12,8 @@ class Usluga(models.Model):
 	plik_service = models.CharField('nazwa pliku service', max_length=100, blank=True)
 	opis = models.CharField('opisik', max_length=1000, default="")
 
-	kolejnosc = models.IntegerField(default=lambda: Usluga.get_next_number())
-	#kolejnosc = models.IntegerField(default=0) #ustaw przy migracji
+	#kolejnosc = models.IntegerField(default=lambda: Usluga.get_next_number())
+	kolejnosc = models.IntegerField(default=0) #ustaw przy migracji
 	@classmethod
 	def get_next_number(cls):
 		return cls.objects.count() + 1
@@ -25,3 +25,23 @@ class Usluga(models.Model):
 	class Meta:	
 		verbose_name_plural = "usługi"
 		verbose_name = "usługa"
+
+
+
+from django.contrib.auth.models import User
+
+
+#dodaje uprawniania dla usera
+class Pozwolenie(models.Model):
+	user = models.OneToOneField(User)
+
+	ADMIN = 'Ad'
+	UZYTKOWNIK = 'Us'
+	
+	typy = (
+		(ADMIN, 'Admin'),
+		(UZYTKOWNIK, 'Uzytkownik'),
+		)
+	Uprawnienia = models.CharField(max_length=2, choices=typy,
+		default=UZYTKOWNIK)
+
