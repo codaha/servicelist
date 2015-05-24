@@ -1,5 +1,5 @@
 # servicelist
 
-Simple tool for your VPS, displays list of avaible services, like webmail, database gui, etc
+Simple tool for your VPS, displays list of avaible services to show world your content.
 
-Written in django, frontend uses bootsrrap for UI. App uses standard Django managment panel for adding end editing your services.
+Written in django and bootstrap.
