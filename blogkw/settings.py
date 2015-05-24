@@ -95,4 +95,4 @@ AXES_LOCKOUT_TEMPLATE = 'registration/login.html'
 AXES_COOLOFF_TIME = 1
 
 #project settings
-ALLOW_ANONYMOUS = 1 
+ALLOW_ANONYMOUS = 0 
