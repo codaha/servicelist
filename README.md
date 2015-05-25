@@ -23,8 +23,7 @@ for managing service files. This was translated from python 2 to python 3 using 
 dbus-python
 Dependency of systemd_manager. This was compiled mannually from source because some problems with installing it by pip
 
-django_widget_tweaks
-For managing styles of form fields inside template files insted of forms.py file
-
+django-admin-sortable
+For drag and drop sorting of iteams in admin panel
 
 
