@@ -35,19 +35,18 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav ">
-                <li><a href="{% url 'servicelist.views.uslugi' %}">Home</a></li>
+                <li><a href="{% url 'views.services' %}">Home</a></li>
                 <li><a href="{% url 'admin:index' %}">Administracja</a></li>
                 
-                <li><a href="{% url 'servicelist.views.add_service' %}">Dodaj usługę</a></li>
             </ul>
 
 
             <ul class="nav navbar-nav pull-right">
                 {% if user.is_authenticated %}
                 <li><a href="">Zalogowano jako: {{ user.get_username }} </a></li>
-                <li><a href="{% url 'servicelist.views.wyloguj' %}">Wyloguj </a></li>
+                <li><a href="{% url 'views.wyloguj' %}">Wyloguj </a></li>
                 {% else %}
-                <li><a href="{% url 'servicelist.views.login_view' %}">Zalgoguj</a></li>       
+                <li><a href="{% url 'views.login_view' %}">Zalgoguj</a></li>       
                 {% endif %}
             </ul>
         </div><!--/.nav-collapse -->
