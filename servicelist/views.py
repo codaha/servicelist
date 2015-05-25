@@ -44,7 +44,7 @@ def services(request):
 		except:
 			pass
 
-	lista_baza=sorted(lista_baza, key=lambda x: x.order)
+	lista_baza=sorted(lista_baza, key=lambda x: x.order2)
 	kontekst = {
 		'service_list': lista_baza
 	}

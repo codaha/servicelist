@@ -1,8 +1,19 @@
 from django.contrib import admin
 from . import models
 
-admin.site.register(models.Service)
+#admin.site.register(models.Service)
 
+
+
+
+from adminsortable.admin import SortableAdmin
+
+class MySortableAdminClass(SortableAdmin):
+    """Any admin options you need go here"""
+
+
+
+admin.site.register(models.Service, MySortableAdminClass)
 #nie potrzebne nam bo sie wyswietla w wnetrzu uslugi
 #admin.site.register(models.Employee)
 

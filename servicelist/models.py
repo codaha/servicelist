@@ -6,14 +6,18 @@ class ItemManager(models.Manager):
 		return self.count() + 1
 
 
-class Service(models.Model):
+from adminsortable.models import Sortable
+class Service(Sortable):
+
+	class Meta(Sortable.Meta):
+		pass
 	name = models.CharField(max_length=100)
 	url = models.URLField(blank=True)
 	service_file = models.CharField(max_length=100, blank=True)
 	description = models.CharField(max_length=1000, default="")
 
 	#order = models.IntegerField(default=lambda: Service.get_next_number())
-	order = models.IntegerField(default=0)
+	order2 = models.IntegerField(default=0)
 	@classmethod
 	def get_next_number(cls):
 		return cls.objects.count() + 1
@@ -38,4 +42,3 @@ class Permission(models.Model):
 	Permissions = models.CharField(max_length=2, choices=typy,
 		default=UZYTKOWNIK)
  
-#

@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'servicelist',
     'widget_tweaks',
     'axes',
+    'adminsortable',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +54,12 @@ MIDDLEWARE_CLASSES = (
     'axes.middleware.FailedLoginMiddleware'
 
 )
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+'django.core.context_processors.static',
+'django.contrib.auth.context_processors.auth',
+    )
 
 ROOT_URLCONF = 'servicelist.urls'
 
