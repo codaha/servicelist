@@ -12,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 from systemd.manager import Manager
 
 ### from this project
-from .forms import *
 from servicelist.models import *
 
 
@@ -38,13 +37,12 @@ def services(request):
 	# dla kazdej uslugi dodaj x.activeState
 	for x in lista_baza:
 		try: #nieistniejacy plik service spowoduje błąd
-			if x.plik_service: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
-				unit = systemd_manager.get_unit(x.plik_service)
+			if x.service_file: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
+				unit = systemd_manager.get_unit(x.service_file)
 				x.activeState = unit.properties.ActiveState
 		except:
 			pass
 
-	lista_baza=sorted(lista_baza, key=lambda x: x.order2)
 	kontekst = {
 		'service_list': lista_baza
 	}
@@ -53,25 +51,6 @@ def services(request):
 	return render(request, 'main.html', kontekst)
 
 
-
-@login_if_required
-def add_service(request):
-	if request.method == 'POST':
-	# create a form instance and populate it with data from the request:
-		form = new_service(request.POST)
-		# check whether it's valid:
-		if form.is_valid():
-			Service(name=request.POST.get('nazwa'), url=request.POST.get('adres'), service_file=request.POST.get('plik_service')).save()
-			#p.save()
-			return HttpResponse("Dodano")
-
-# if a GET (or any other method) we'll create a blank form
-	else:
-		form = new_service()
-
-
-	return render(request, 'add_service.html', {'form': form})
-	#return HttpResponse("empty")
 from axes.decorators import watch_login
 
 @watch_login
@@ -106,17 +85,3 @@ def login_view(request):
 def logout_view(request):
 	logout(request)
 	return redirect('login')
-
-#without this there will be 403 error from ajax
-from django.views.decorators.csrf import ensure_csrf_cookie
-@ensure_csrf_cookie
-
-def ajax_order(request):
-	if request.method == 'POST':
-		#we should get string with order of elements on the list marked with id numbers from db
-		#we remove "order" and strip string to list
-		list= request.POST.get('lista', '').replace("pozycja[]=", "").split('&')
-		for nr, x in enumerate(list, start=1):
-			s = Service.objects.get(id=x)
-			s.position=nr
-			s.save()

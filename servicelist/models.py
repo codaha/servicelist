@@ -15,12 +15,6 @@ class Service(Sortable):
 	url = models.URLField(blank=True)
 	service_file = models.CharField(max_length=100, blank=True)
 	description = models.CharField(max_length=1000, default="")
-
-	#order = models.IntegerField(default=lambda: Service.get_next_number())
-	order2 = models.IntegerField(default=0)
-	@classmethod
-	def get_next_number(cls):
-		return cls.objects.count() + 1
 	
 	def __str__(self):
 		return self.name
