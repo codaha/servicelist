@@ -44,9 +44,9 @@
             <ul class="nav navbar-nav pull-right">
                 {% if user.is_authenticated %}
                 <li><a href="">Zalogowano jako: {{ user.get_username }} </a></li>
-                <li><a href="{% url 'views.wyloguj' %}">Wyloguj </a></li>
+                <li><a href="{% url 'logout' %}">Wyloguj </a></li>
                 {% else %}
-                <li><a href="{% url 'views.login_view' %}">Zalgoguj</a></li>       
+                <li><a href="{% url 'login' %}">Zalgoguj</a></li>       
                 {% endif %}
             </ul>
         </div><!--/.nav-collapse -->
@@ -67,7 +67,7 @@ $(document).ready(function() {
     $("#sortable").sortable();
 
     $( "#zmien" ).click(function() {
-        $.post("{% url 'servicelist.views.ajax_order' %}", { lista: $('#sortable').sortable('serialize'),'csrfmiddlewaretoken': '{{ csrf_token }}' } );
+        $.post("{% url 'order' %}", { lista: $('#sortable').sortable('serialize'),'csrfmiddlewaretoken': '{{ csrf_token }}' } );
     });
 
 });

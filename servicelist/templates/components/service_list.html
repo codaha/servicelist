@@ -8,23 +8,23 @@
 		<div class="row">
 			<div class="col-sm-8" id="vertical-center">
 
-				{%if x.opis%} <span id="ikona_{{ x.id }}"
+				{%if x.description%} <span id="ikona_{{ x.id }}"
 					class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
-				{%endif%} <a href="{{ x.adres }}">{{ x.nazwa }}</a>
+				{%endif%} <a href="{{ x.url }}">{{ x.name }}</a>
 
 			</div>
 			<div class="col-sm-4 text-right">
 			{% if x.activeState == "active" %}
 				{% include 'components/service_menu.html' with kolor='btn-success' napis='Started'%}
 			{% elif x.activeState == "failed" %}
-				{% include 'components/service_menu.html' withkolor='btn-danger' napis='Failed'%}
+				{% include 'components/service_menu.html' with kolor='btn-danger' napis='Failed'%}
 			{% elif x.activeState == "reloading" or x.activeState == "activating" or x.activeState == "deactivating" %}
 				{% include 'components/service_menu.html' with kolor='btn-warning' napis='Reloading'%}
 			{% endif %}</div>
 		</div>
-	</li> {%if x.opis%}
+	</li> {%if x.description%}
 	<li class="list-group-item ukryty" id="opis_{{ x.id }}">
-		<div class="row">{{ x.opis}}</div>
+		<div class="row">{{ x.description}}</div>
 	</li>
 
 	<script>

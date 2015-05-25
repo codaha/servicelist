@@ -44,7 +44,7 @@ def services(request):
 		except:
 			pass
 
-	lista_baza=sorted(lista_baza, key=lambda x: x.position)
+	lista_baza=sorted(lista_baza, key=lambda x: x.order)
 	kontekst = {
 		'service_list': lista_baza
 	}
@@ -105,7 +105,7 @@ def login_view(request):
 		return render(request, 'registration/login.html')
 def logout_view(request):
 	logout(request)
-	return redirect('servicelist.views.login_view')
+	return redirect('login')
 
 #without this there will be 403 error from ajax
 from django.views.decorators.csrf import ensure_csrf_cookie
