@@ -47,7 +47,7 @@
                 <li><a href="">Zalogowano jako: {{ user.get_username }} </a></li>
                 <li><a href="{% url 'servicelist.views.wyloguj' %}">Wyloguj </a></li>
                 {% else %}
-                <li><a href="{% url 'servicelist.views.logowanie' %}">Zalgoguj</a></li>       
+                <li><a href="{% url 'servicelist.views.login_view' %}">Zalgoguj</a></li>       
                 {% endif %}
             </ul>
         </div><!--/.nav-collapse -->
