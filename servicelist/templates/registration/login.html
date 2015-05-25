@@ -18,7 +18,7 @@ $("#formlog:submit").attr("disabled", true);
 
 <div class="container" >
 
-	<form id="formlog" class="form-signin" method="post" action="{% url 'blog.views.logowanie' %}">
+	<form id="formlog" class="form-signin" method="post" action="{% url 'servicelist.views.logowanie' %}">
 	{% csrf_token %}
 		<h2 class="form-signin-heading">Service list login</h2>
 		<label for="inputEmail" class="sr-only">Your login</label>

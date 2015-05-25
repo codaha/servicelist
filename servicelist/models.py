@@ -6,43 +6,36 @@ class ItemManager(models.Manager):
 		return self.count() + 1
 
 
-class Usluga(models.Model):
-	nazwa = models.CharField('nazwa usługi', max_length=100)
-	adres = models.URLField('adres URL', blank=True)
-	plik_service = models.CharField('nazwa pliku service', max_length=100, blank=True)
-	opis = models.CharField('opisik', max_length=1000, default="")
+class Service(models.Model):
+	name = models.CharField(max_length=100)
+	url = models.URLField(blank=True)
+	service_file = models.CharField(max_length=100, blank=True)
+	description = models.CharField(max_length=1000, default="")
 
-	#kolejnosc = models.IntegerField(default=lambda: Usluga.get_next_number())
-	kolejnosc = models.IntegerField(default=0) #ustaw przy migracji
+	#order = models.IntegerField(default=lambda: Service.get_next_number())
+	order = models.IntegerField(default=0)
 	@classmethod
 	def get_next_number(cls):
 		return cls.objects.count() + 1
-
-#na liscie admina wyswietlaj tytulujac nazwa
+	
 	def __str__(self):
-		return self.nazwa
-
-	class Meta:	
-		verbose_name_plural = "usługi"
-		verbose_name = "usługa"
-
-
+		return self.name
 
 from django.contrib.auth.models import User
 
 
 #dodaje uprawniania dla usera
-class Pozwolenie(models.Model):
+class Permission(models.Model):
 	user = models.OneToOneField(User)
-
+ 
 	ADMIN = 'Ad'
 	UZYTKOWNIK = 'Us'
-	
+ 	
 	typy = (
 		(ADMIN, 'Admin'),
 		(UZYTKOWNIK, 'Uzytkownik'),
 		)
-	Uprawnienia = models.CharField(max_length=2, choices=typy,
+	Permissions = models.CharField(max_length=2, choices=typy,
 		default=UZYTKOWNIK)
-
+ 
 #

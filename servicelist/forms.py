@@ -1,8 +1,6 @@
-
-#from blog.models import *
 from django import forms
 
-class Nowy(forms.Form):
+class new_service(forms.Form):
 	nazwa = forms.CharField()
 	adres = forms.URLField(required=False)
 	plik_service = forms.CharField(required=False)

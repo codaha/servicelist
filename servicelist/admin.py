@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . import models
 
-admin.site.register(models.Usluga)
+admin.site.register(models.Service)
 
 #nie potrzebne nam bo sie wyswietla w wnetrzu uslugi
 #admin.site.register(models.Employee)
@@ -11,17 +11,16 @@ admin.site.register(models.Usluga)
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from servicelist.models import Pozwolenie
+from servicelist.models import *
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
-class Pokazpozwolenie(admin.StackedInline):
-    model = Pozwolenie
+class PermissionAdmin(admin.StackedInline):
+    model = Permission
     can_delete = False
-    verbose_name_plural = 'Uprawnienia'
 
 # Define a new User admin
 class UserAdmin(UserAdmin):
-    inlines = (Pokazpozwolenie, )
+    inlines = (PermissionAdmin, )
 
 # Re-register UserAdmin
 admin.site.unregister(User)

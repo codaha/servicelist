@@ -3,41 +3,37 @@ from django.conf import settings
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 
-#logowanie
+#authentication
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-#biblioteki zewnetrzen
+#external libraries
 from systemd.manager import Manager
 
-### projekt
+### from this project
 from .forms import *
 from servicelist.models import *
 
 
 
-
 from django.conf import settings
 if(settings.ALLOW_ANONYMOUS):
-	def nic(funct):
+	def do_nothing(funct):
 		return funct
 		
-	corobic = nic
+	login_if_required = do_nothing
 
 else:
-	corobic = login_required
+	login_if_required = login_required
 
 
 
 
-@corobic
-def uslugi(request):
-	
+@login_if_required
+def services(request):
 	systemd_manager = Manager()
-
-
-	lista_baza = Usluga.objects.all()
+	lista_baza = Service.objects.all()
 
 	# dla kazdej uslugi dodaj x.activeState
 	for x in lista_baza:
@@ -48,9 +44,9 @@ def uslugi(request):
 		except:
 			pass
 
-	lista_baza=sorted(lista_baza, key=lambda x: x.kolejnosc)
+	lista_baza=sorted(lista_baza, key=lambda x: x.position)
 	kontekst = {
-		'lista_uslug': lista_baza
+		'service_list': lista_baza
 	}
 	systemd_manager.unsubscribe()
 	
@@ -58,83 +54,69 @@ def uslugi(request):
 
 
 
-@corobic
-def dodajnowy(request):
+@login_if_required
+def add_service(request):
 	if request.method == 'POST':
 	# create a form instance and populate it with data from the request:
-		form = Nowy(request.POST)
+		form = new_service(request.POST)
 		# check whether it's valid:
 		if form.is_valid():
-			Usluga(nazwa=request.POST.get('nazwa'), adres=request.POST.get('adres'), plik_service=request.POST.get('plik_service')).save()
+			Service(name=request.POST.get('nazwa'), url=request.POST.get('adres'), service_file=request.POST.get('plik_service')).save()
 			#p.save()
 			return HttpResponse("Dodano")
 
 # if a GET (or any other method) we'll create a blank form
 	else:
-		form = Nowy()
+		form = new_service()
 
 
-	return render(request, 'dodaj.html', {'form': form})
+	return render(request, 'add_service.html', {'form': form})
 	#return HttpResponse("empty")
 from axes.decorators import watch_login
 
-#potrzebne poniewaz nie uzywam standardowego view django login
 @watch_login
-def logowanie(request):
-	#jeśli strona jest przeładowywana w celu logowania
+def login_view(request):
+	#when page is requested
 	if request.method == 'POST':
-		#import pdb; pdb.set_trace()
 		user = authenticate(
 			username=request.POST.get('id_username', '').strip(),
 			password= request.POST.get('id_password', ''),
-			)
-
+		)
 		
-		#jeśli złe dane logowania
+		#when wrong credentials provided
 		if user is None:
 			kontekst = {
-			'ukryty': 'Nieprawidłowa nazwa użytkownika lub hasło'
+			'ukryty': 'Wrong username or password'
 			}
 			return render(request, 'registration/login.html', kontekst)
 		else:
-			#jeśli dale logowania ok
+			#when credentials are good
 			if user.is_active:
 				login(request, user)
-				#jeśli jest info gdzie przekirować z strony logowania
 				if next in request.POST:
+					#when user was redirected here, redirect him back after authorization
 					return redirect(servicelist.views.request.POST['next'])#TODO
-				#jeśli user wszedl bezposrednio na stronę logowania
 				else:
-					return redirect('servicelist.views.uslugi')
-	#jeśli user jest już zalogowany
+					return redirect('servicelist.views.services')
 	if request.user.is_authenticated():
-		return redirect('servicelist.views.uslugi')
-	#jeśli strona loginu jest otwierana w celu wpisania danych dopiero
+		return redirect('servicelist.views.services')
+	#unfilled form is requested to scarcely provide credentials
 	else:
 		return render(request, 'registration/login.html')
-def wyloguj(request):
+def logout_view(request):
 	logout(request)
-	return redirect('servicelist.views.logowanie')
+	return redirect('servicelist.views.login_view')
 
-#inaczej blad 403 przy ajax
+#without this there will be 403 error from ajax
 from django.views.decorators.csrf import ensure_csrf_cookie
 @ensure_csrf_cookie
 
-def kolejnosc(request):
-	#pass
-	
+def ajax_order(request):
 	if request.method == 'POST':
-		#otrzymujemy string z kolejnascia  na lisciekolejnych elementow oznaczonych numerami id w bazie danych
-		#usuwamy "pozycja" i dzielimy string na liste
-		lista= request.POST.get('lista', '').replace("pozycja[]=", "").split('&')
-
-		#lista_baza = Usluga.objects.all()
-
-		#import pdb; pdb.set_trace()
-
-		for nr, x in enumerate(lista, start=1):
-			pozycja = Usluga.objects.get(id=x)#.save(kolejnosc=nr)
-			pozycja.kolejnosc=nr
-			pozycja.save()
-			
-		#print(lista)
+		#we should get string with order of elements on the list marked with id numbers from db
+		#we remove "order" and strip string to list
+		list= request.POST.get('lista', '').replace("pozycja[]=", "").split('&')
+		for nr, x in enumerate(list, start=1):
+			s = Service.objects.get(id=x)
+			s.position=nr
+			s.save()

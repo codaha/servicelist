@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% block zawartosc %}
 <div class="margines_1em dodaj">
-<form action={% url 'blog.views.dodajnowy' %} method="post" class="form-horizontal" role="form">
+<form action={% url 'servicelist.views.add_service' %} method="post" class="form-horizontal" role="form">
     {% csrf_token %}
 
 

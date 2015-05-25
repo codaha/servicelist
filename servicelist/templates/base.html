@@ -35,19 +35,19 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav ">
-                <li><a href="{% url 'blog.views.uslugi' %}">Home</a></li>
+                <li><a href="{% url 'servicelist.views.uslugi' %}">Home</a></li>
                 <li><a href="{% url 'admin:index' %}">Administracja</a></li>
                 
-                <li><a href="{% url 'blog.views.dodajnowy' %}">Dodaj usługę</a></li>
+                <li><a href="{% url 'servicelist.views.add_service' %}">Dodaj usługę</a></li>
             </ul>
 
 
             <ul class="nav navbar-nav pull-right">
                 {% if user.is_authenticated %}
                 <li><a href="">Zalogowano jako: {{ user.get_username }} </a></li>
-                <li><a href="{% url 'blog.views.wyloguj' %}">Wyloguj </a></li>
+                <li><a href="{% url 'servicelist.views.wyloguj' %}">Wyloguj </a></li>
                 {% else %}
-                <li><a href="{% url 'blog.views.logowanie' %}">Zalgoguj</a></li>       
+                <li><a href="{% url 'servicelist.views.logowanie' %}">Zalgoguj</a></li>       
                 {% endif %}
             </ul>
         </div><!--/.nav-collapse -->
@@ -68,7 +68,7 @@ $(document).ready(function() {
     $("#sortable").sortable();
 
     $( "#zmien" ).click(function() {
-        $.post("{% url 'blog.views.kolejnosc' %}", { lista: $('#sortable').sortable('serialize'),'csrfmiddlewaretoken': '{{ csrf_token }}' } );
+        $.post("{% url 'servicelist.views.ajax_order' %}", { lista: $('#sortable').sortable('serialize'),'csrfmiddlewaretoken': '{{ csrf_token }}' } );
     });
 
 });
