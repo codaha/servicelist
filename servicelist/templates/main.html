@@ -4,10 +4,70 @@
 <div class="container margines_1em waski">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
+			<h3 class="panel-title">Serwisiki</h3>
 		</div>
 		<div class="panel-body">
-			{% include "components/service_list.html" %}
+			
+
+
+
+
+
+<ul class="list-group">
+
+	{% for x in service_list %}
+
+	<li class="list-group-item" id="pozycja_{{ x.id}}">
+		<div class="row">
+			<div class="col-sm-8" id="vertical-center">
+
+				{%if x.description or x.service_state %} <span id="ikona_{{ x.id }}"
+					class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
+				{%endif%} <a href="{{ x.url }}">{{ x.name }}</a>
+
+			</div>
+			
+		</div>
+	</li> {%if x.description or x.service_state %}
+	<li class="list-group-item ukryty" id="opis_{{ x.id }}">
+		<div class="row">{{ x.description}}<br>
+
+ Stan plikow serwice: <Br><br>
+ {% for dict in x.service_state %}
+
+ {% for key,value in dict.items %}
+
+		
+
+
+		{% if value == "active" %} {{ key }} - OK 
+		{% elif value == "failed" %} {{ key }} - Service inactive
+		{% elif value == "reloading"  or value == "activating" or value == "deactivating" %} {{ key }} - Service reloading
+		{% elif value == "none" %} {{ key }} - Service file not found
+		{%endif%}
+		<br>
+
+ {% endfor %}
+ {% endfor %}
+		</div>
+ 
+	</li>
+
+	<script>
+		$("#ikona_{{ x.id }}").click(function() {
+
+			$("#opis_{{ x.id }}").toggle("slide");
+
+		});
+	</script>
+	{%endif%} {% endfor %}
+</ul>
+
+
+
+
+
+
 		</div>
 	</div>
 </div><!-- /.container -->

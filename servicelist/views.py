@@ -48,29 +48,30 @@ def services(request):
 	
 
 		matching_services = ServiceFile.objects.filter(service=x)
-	
-		matching_services_names=[]
-		for y in matching_services:
-
-
+		if matching_services:
 			
-
-			
-
-			try:
-				unit = systemd_manager.get_unit(y.service_file)
-				y.activeState = unit.properties.ActiveState
+			matching_services_names=[]
+			for y in matching_services:
 
 
+				
 
-			except:
-				y.activeState= 'blad'
+				
 
-			ser = {y.service_file: y.activeState}
-			matching_services_names.append(ser)
-			print(matching_services_names)
+				try:
+					unit = systemd_manager.get_unit(y.service_file)
+					y.activeState = unit.properties.ActiveState
 
-		x.service_state = matching_services_names
+
+
+				except:
+					y.activeState= 'none'
+
+				ser = {y.service_file: y.activeState}
+				matching_services_names.append(ser)
+				#print(matching_services_names)
+
+			x.service_state = matching_services_names
 
 		#if x.service_file: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
 		#	unit = systemd_manager.get_unit(x.service_file)

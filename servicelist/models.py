@@ -15,7 +15,7 @@ class Service(Sortable):
 	name = models.CharField(max_length=100)
 	url = models.URLField(blank=True)
 	#service_file = models.ForeignKey(ServiceFile)
-	description = models.CharField(max_length=1000, default="")
+	description = models.CharField(max_length=1000, blank=True)
 	
 	def __str__(self):
 		return self.name
