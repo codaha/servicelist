@@ -17,7 +17,7 @@ from servicelist.models import *
 
 
 from django.conf import settings
-
+config = SiteConfiguration.get_solo()
 config = SiteConfiguration.objects.get(pk=1)
 
 if(config.allow_anonymous):
