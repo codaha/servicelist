@@ -26,4 +26,5 @@ Dependency of systemd_manager. This was compiled mannually from source because s
 django-admin-sortable
 For drag and drop sorting of iteams in admin panel
 
-
+django_widget_tweaks
+For managing styles of form fields inside template files insted of forms.py file
