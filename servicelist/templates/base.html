@@ -49,7 +49,9 @@
             <ul class="nav navbar-nav ">
                 <li><a href="{% url 'views.services' %}">Home</a></li>
                 <li><a href="{% url 'admin:index' %}">Administracja</a></li>
-                
+                {%if site_config.mail %}
+                <li><a href="mailto:{{ site_config.mail }}">Kontakt</a></li>
+                {%endif%}
             </ul>
 
             {% if site_config.allow_anonymous == 0 %}
