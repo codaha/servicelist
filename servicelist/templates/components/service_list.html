@@ -24,7 +24,10 @@
 		</div>
 	</li> {%if x.description%}
 	<li class="list-group-item ukryty" id="opis_{{ x.id }}">
-		<div class="row">{{ x.description}}</div>
+		<div class="row">{{ x.description}}<br>
+
+ Stan plikow serwice: {{ x.service_state }}
+		</div>
 	</li>
 
 	<script>

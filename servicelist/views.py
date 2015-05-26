@@ -29,23 +29,58 @@ else:
 
 
 
+#import pdb; pdb.set_trace()
 @login_if_required
 def services(request):
+
+
+
+
 	systemd_manager = Manager()
 	lista_baza = Service.objects.all()
+	
+	lista_plik = ServiceFile.objects.all()
+	
+
 
 	# dla kazdej uslugi dodaj x.activeState
 	for x in lista_baza:
-		try: #nieistniejacy plik service spowoduje błąd
-			if x.service_file: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
-				unit = systemd_manager.get_unit(x.service_file)
-				x.activeState = unit.properties.ActiveState
-		except:
-			pass
+	
+
+		matching_services = ServiceFile.objects.filter(service=x)
+	
+		matching_services_names=[]
+		for y in matching_services:
+
+
+			
+
+			
+
+			try:
+				unit = systemd_manager.get_unit(y.service_file)
+				y.activeState = unit.properties.ActiveState
+
+
+
+			except:
+				y.activeState= 'blad'
+
+			ser = {y.service_file: y.activeState}
+			matching_services_names.append(ser)
+			print(matching_services_names)
+
+		x.service_state = matching_services_names
+
+		#if x.service_file: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
+		#	unit = systemd_manager.get_unit(x.service_file)
+		#	x.activeState = unit.properties.ActiveState
+
 
 	kontekst = {
 		'service_list': lista_baza
 	}
+	#print(kontekst)
 	systemd_manager.unsubscribe()
 	
 	return render(request, 'main.html', kontekst)

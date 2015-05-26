@@ -3,7 +3,7 @@ from . import models
 
 #admin.site.register(models.Service)
 
-
+#admin.site.register(models.ServiceFile)
 
 
 from adminsortable.admin import SortableAdmin
@@ -13,9 +13,7 @@ class MySortableAdminClass(SortableAdmin):
 
 
 
-admin.site.register(models.Service, MySortableAdminClass)
-#nie potrzebne nam bo sie wyswietla w wnetrzu uslugi
-#admin.site.register(models.Employee)
+#admin.site.register(models.Service, MySortableAdminClass)
 
 
 
@@ -37,5 +35,25 @@ class UserAdmin(UserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
+
+
+
+class FileInline(admin.TabularInline):
+    model = ServiceFile
+    extra = 1 
+
+class ServiceAdmin(SortableAdmin):
+    inlines = [
+        FileInline,
+    ]
+
+
+admin.site.register(Service, ServiceAdmin)
+
+
+
+
+
+#hide groups
 from django.contrib.auth.models import Group
 admin.site.unregister(Group)

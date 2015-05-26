@@ -6,6 +6,7 @@ class ItemManager(models.Manager):
 		return self.count() + 1
 
 
+
 from adminsortable.models import Sortable
 class Service(Sortable):
 
@@ -13,13 +14,22 @@ class Service(Sortable):
 		pass
 	name = models.CharField(max_length=100)
 	url = models.URLField(blank=True)
-	service_file = models.CharField(max_length=100, blank=True)
+	#service_file = models.ForeignKey(ServiceFile)
 	description = models.CharField(max_length=1000, default="")
 	
 	def __str__(self):
 		return self.name
 
+
+
+class ServiceFile(models.Model):
+	service_file = models.CharField(max_length=100)
+	service = models.ForeignKey(Service)
+	def __str__(self):
+		return self.service_file
+
 from django.contrib.auth.models import User
+
 
 
 #dodaje uprawniania dla usera
