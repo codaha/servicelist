@@ -28,3 +28,6 @@ For drag and drop sorting of iteams in admin panel
 
 django_widget_tweaks
 For managing styles of form fields inside template files insted of forms.py file
+
+django-solo
+For managing app settings from administration panel
