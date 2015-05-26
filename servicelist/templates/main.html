@@ -13,55 +13,66 @@
 
 
 
-<ul class="list-group">
+			<ul class="list-group">
 
-	{% for x in service_list %}
+				{% for x in service_list %}
 
-	<li class="list-group-item" id="pozycja_{{ x.id}}">
-		<div class="row">
-			<div class="col-sm-8" id="vertical-center">
+				<li class="list-group-item" id="pozycja_{{ x.id}}">
+					<div class="row">
+						<div class="col-md-7" >
 
-				{%if x.description or x.service_state %} <span id="ikona_{{ x.id }}"
-					class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
-				{%endif%} <a href="{{ x.url }}">{{ x.name }}</a>
-
-			</div>
-			
-		</div>
-	</li> {%if x.description or x.service_state %}
-	<li class="list-group-item ukryty" id="opis_{{ x.id }}">
-		<div class="row">{{ x.description}}<br>
-
- Stan plikow serwice: <Br><br>
- {% for dict in x.service_state %}
-
- {% for key,value in dict.items %}
-
-		
+							<a href="{{ x.url }}">{{ x.name }}</a>
 
 
-		{% if value == "active" %} {{ key }} - OK 
-		{% elif value == "failed" %} {{ key }} - Service inactive
-		{% elif value == "reloading"  or value == "activating" or value == "deactivating" %} {{ key }} - Service reloading
-		{% elif value == "none" %} {{ key }} - Service file not found
-		{%endif%}
-		<br>
 
- {% endfor %}
- {% endfor %}
-		</div>
- 
-	</li>
 
-	<script>
-		$("#ikona_{{ x.id }}").click(function() {
 
-			$("#opis_{{ x.id }}").toggle("slide");
+						</div>
+						{%if x.description or x.service_state %}
+						<div class="col-md-1" style="    float: right;">
+							<button id="ikona_{{ x.id }}" type="button" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-menu-down" aria-hidden="true" style="align: right;"></span>
+							</button>
+						</div>
+						{%endif%}
+					</div>
+				</li> 
 
-		});
-	</script>
-	{%endif%} {% endfor %}
-</ul>
+
+				{%if x.description or x.service_state %}
+				<li class="list-group-item ukryty " id="opis_{{ x.id }}">
+					<div class="row">
+<div class="col-sm-8" id="vertical-center">
+
+{{ x.description}}<br>
+						Stan plikow serwice: <Br><br>
+						{% for dict in x.service_state %}
+
+							{% for key,value in dict.items %}
+
+								{% if value == "active" %} {{ key }} - OK 
+								{% elif value == "failed" %} {{ key }} - Service inactive
+								{% elif value == "reloading"  or value == "activating" or value == "deactivating" %} {{ key }} - Service reloading
+								{% elif value == "none" %} {{ key }} - Service file not found
+								{%endif%}
+							<br>
+
+							{% endfor %}
+						{% endfor %}
+						</div>
+					</div>
+
+				</li>
+
+				<script>
+					$("#ikona_{{ x.id }}").click(function() {
+
+						$("#opis_{{ x.id }}").toggle("slideUp");
+
+					});
+				</script>
+				{%endif%} {% endfor %}
+			</ul>
 
 
 
@@ -70,5 +81,5 @@
 
 		</div>
 	</div>
-</div><!-- /.container -->
+</div>
 {% endblock %}

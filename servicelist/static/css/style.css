@@ -12,13 +12,7 @@ body {
 	margin-left: auto; /* wycentrowanie bloku */
 	margin-right: auto;
 }
-.dodaj{
-max-width: 630px;
 
-	margin-left: auto; /* wycentrowanie bloku */
-	margin-right: auto;
-
-}
 /*do listy uslug*/
 .waski{
 max-width: 430px;
@@ -26,7 +20,10 @@ max-width: 430px;
 }
 
 .ukryty 
-    { display: none; }
+    { display: none; 
+
+    list-style-type: none;}
 .glyphicon-circle-arrow-down {
     color: red;
 }
+
