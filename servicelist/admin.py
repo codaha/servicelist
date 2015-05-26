@@ -52,6 +52,9 @@ admin.site.register(Service, ServiceAdmin)
 
 
 
+from solo.admin import SingletonModelAdmin
+
+admin.site.register(SiteConfiguration, SingletonModelAdmin)
 
 
 #hide groups

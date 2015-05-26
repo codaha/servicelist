@@ -9,7 +9,19 @@
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Testowy projekt</title>
+
+
+
+
+{% load solo_tags %}
+{% get_solo 'servicelist.SiteConfiguration' as site_config %}
+
+
+
+
+
+
+        <title>{{ site_config.site_name }}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -40,7 +52,7 @@
                 
             </ul>
 
-
+            {% if site_config.allow_anonymous == 0 %}
             <ul class="nav navbar-nav pull-right">
                 {% if user.is_authenticated %}
                 <li><a href="">Zalogowano jako: {{ user.get_username }} </a></li>
@@ -49,6 +61,8 @@
                 <li><a href="{% url 'login' %}">Zalgoguj</a></li>       
                 {% endif %}
             </ul>
+
+            {%endif%}
         </div><!--/.nav-collapse -->
     </div>
 </nav>

@@ -17,7 +17,11 @@ from servicelist.models import *
 
 
 from django.conf import settings
-if(settings.ALLOW_ANONYMOUS):
+
+config = SiteConfiguration.objects.get(pk=1)
+
+import pdb; pdb.set_trace()
+if(config.allow_anonymous):
 	def do_nothing(funct):
 		return funct
 		

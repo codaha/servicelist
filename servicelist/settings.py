@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'servicelist',
     'axes',
     'adminsortable',
+    'solo',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -7,6 +7,22 @@ class ItemManager(models.Manager):
 
 
 
+
+
+from solo.models import SingletonModel
+
+
+class SiteConfiguration(SingletonModel):
+    site_name = models.CharField(max_length=255, default='Project 2501')
+    allow_anonymous = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return u"Site Configuration"
+
+    class Meta:
+        verbose_name = "Site Configuration"
+
+
 from adminsortable.models import Sortable
 class Service(Sortable):
 
