@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'axes',
     'adminsortable',
     'solo',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,3 +106,6 @@ AXES_COOLOFF_TIME = 1
 
 #project settings
 ALLOW_ANONYMOUS = 0 
+
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 1 
