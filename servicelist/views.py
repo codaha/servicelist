@@ -8,14 +8,17 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+
+### from this project
+from servicelist.models import *
+from django.conf import settings
+
 #external libraries
 if(settings.INITSYSTEM == "systemd"):
 	from systemd.manager import Manager
 if(settings.INITSYSTEM == "openrc"):
 	pass
 
-### from this project
-from servicelist.models import *
 
 config = SiteConfiguration.get_solo()
 config = SiteConfiguration.objects.get(pk=1)
@@ -37,7 +40,7 @@ def services(request):
 	lista_plik = ServiceFile.objects.all()
 	# dla kazdej uslugi dodaj x.activeState
 	for x in lista_baza:
-		if(settings.INITSCRIPT=="systemd"):
+		if(settings.INITSYSTEM=="systemd"):
 			matching_services = ServiceFile.objects.filter(service=x)
 			if matching_services:
 				matching_services_names=[]
@@ -57,7 +60,7 @@ def services(request):
 			#if x.service_file: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
 			#	unit = systemd_manager.get_unit(x.service_file)
 			#	x.activeState = unit.properties.ActiveState
-		if(settings.INITSCRIPT=="openrc"):
+		if(settings.INITSYSTEM=="openrc"):
 			pass
 
 
