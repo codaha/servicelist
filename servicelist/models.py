@@ -30,6 +30,7 @@ class Service(Sortable):
 	class Meta(Sortable.Meta):
 		pass
 	name = models.CharField(max_length=100)
+	type = models.CharField(max_length=64, default="url") # url / systemd / openrc
 	url = models.URLField(blank=True)
 	#service_file = models.ForeignKey(ServiceFile)
 	description = models.CharField(max_length=1000, blank=True)

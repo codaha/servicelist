@@ -9,14 +9,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 #external libraries
-from systemd.manager import Manager
+if(settings.INITSYSTEM == "systemd"):
+	from systemd.manager import Manager
+if(settings.INITSYSTEM == "openrc"):
+	pass
 
 ### from this project
 from servicelist.models import *
 
-
-
-from django.conf import settings
 config = SiteConfiguration.get_solo()
 config = SiteConfiguration.objects.get(pk=1)
 
@@ -25,68 +25,48 @@ if(config.allow_anonymous):
 		return funct
 		
 	login_if_required = do_nothing
-
 else:
 	login_if_required = login_required
 
 
-
-
-#import pdb; pdb.set_trace()
 @login_if_required
 def services(request):
-
-
-
-
-	systemd_manager = Manager()
+	if(settings.INITSYSTEM=="systemd"):
+		systemd_manager = Manager()
 	lista_baza = Service.objects.all()
-	
 	lista_plik = ServiceFile.objects.all()
-	
-
-
 	# dla kazdej uslugi dodaj x.activeState
 	for x in lista_baza:
+		if(settings.INITSCRIPT=="systemd"):
+			matching_services = ServiceFile.objects.filter(service=x)
+			if matching_services:
+				matching_services_names=[]
+				for y in matching_services:
+					try:
+						unit = systemd_manager.get_unit(y.service_file)
+						y.activeState = unit.properties.ActiveState
+					except:
+						y.activeState= 'none'
 	
-
-		matching_services = ServiceFile.objects.filter(service=x)
-		if matching_services:
-			
-			matching_services_names=[]
-			for y in matching_services:
-
-
-				
-
-				
-
-				try:
-					unit = systemd_manager.get_unit(y.service_file)
-					y.activeState = unit.properties.ActiveState
-
-
-
-				except:
-					y.activeState= 'none'
-
-				ser = {y.service_file: y.activeState}
-				matching_services_names.append(ser)
-				#print(matching_services_names)
-
-			x.service_state = matching_services_names
-
-		#if x.service_file: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
-		#	unit = systemd_manager.get_unit(x.service_file)
-		#	x.activeState = unit.properties.ActiveState
+					ser = {y.service_file: y.activeState}
+					matching_services_names.append(ser)
+					#print(matching_services_names)
+	
+				x.service_state = matching_services_names
+	
+			#if x.service_file: #jeśli jest okreslony plik oslugi podanyistnieje w systemie
+			#	unit = systemd_manager.get_unit(x.service_file)
+			#	x.activeState = unit.properties.ActiveState
+		if(settings.INITSCRIPT=="openrc"):
+			pass
 
 
 	kontekst = {
 		'service_list': lista_baza
 	}
 	#print(kontekst)
-	systemd_manager.unsubscribe()
-	
+	if(settings.INITSYSTEM == "systemd"):
+		systemd_manager.unsubscribe()
 	return render(request, 'main.html', kontekst)
 
 
