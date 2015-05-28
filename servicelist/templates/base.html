@@ -35,9 +35,6 @@
             <ul class="nav navbar-nav ">
                 <li><a href="{% url 'views.services' %}">Home</a></li>
                 <li><a href="{% url 'admin:index' %}">Administracja</a></li>
-                {% if user.is_authenticated %}
-               		<li><a href="{% url 'views.add_service' %}">Add service</a></li>
-                {% endif %}
                 {%if site_config.mail %}
                 <li><a href="mailto:{{ site_config.mail }}">Kontakt</a></li>
                 {%endif%}

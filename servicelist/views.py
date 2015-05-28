@@ -8,7 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .forms import *
 #external libraries
 if(settings.INITSYSTEM == "systemd"):
 	from systemd.manager import Manager
@@ -105,16 +104,3 @@ def login_view(request):
 def logout_view(request):
 	logout(request)
 	return redirect('login')
-
-def add_service(request):
-	if request.method == 'POST':
-		form = AddServiceForm(request.POST)
-		if form.is_valid():
-			# add service here
-			pass
-	else:
-		form = AddServiceForm()
-	context = {
-			'form': form
-			}
-	return render(request, 'add_service.html', context)
