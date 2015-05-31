@@ -16,6 +16,7 @@ class SiteConfiguration(SingletonModel):
     site_name = models.CharField(max_length=255, default='Project 2501')
     allow_anonymous = models.BooleanField(default=False)
     mail = models.EmailField(blank=True)
+    message = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
         return u"Site Configuration"

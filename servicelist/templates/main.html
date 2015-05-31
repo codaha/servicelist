@@ -1,8 +1,17 @@
 {% extends "base.html" %} {% block zawartosc %}
+
+{% load solo_tags %}
+{% get_solo 'servicelist.SiteConfiguration' as site_config %}
+
+
+
+
+
+
 <div class="container margines_1em waski">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Serwisiki</h3>
+			<h3 class="panel-title text-center">{{site_config.message}}</h3>
 		</div>
 		<div class="panel-body">
 			<ul class="list-group">
